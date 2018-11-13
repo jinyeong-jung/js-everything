@@ -1,0 +1,30 @@
+.weather_body {
+    background-image: url("../images/weather.jpg");
+    font-family: 'Open Sans', sans-serif;
+}
+
+.weather_wrap {
+    margin-top: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn .5s linear;
+}
+
+.weather_place {
+    font-size: 50px;
+    color: white;
+}
+
+.weather_description {
+    color: white;
+    margin-top: 10px;
+}
+
+.weather_temp {
+    font-size: 70px;
+    color: white;
+    margin-top: 20px;
+    font-weight: 100;
+}

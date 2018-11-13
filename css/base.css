@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Signika:300,400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import "global.css";
+@import "index.css";
+@import "weather.css";
+@import "todo.css";
+@import "bookmark.css";
+@import "timer.css";
