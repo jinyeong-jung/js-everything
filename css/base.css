@@ -6,3 +6,8 @@
 @import "todo.css";
 @import "bookmark.css";
 @import "timer.css";
+
+/* hidden */
+.hidden {
+    display: none;
+}
