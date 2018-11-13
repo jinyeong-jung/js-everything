@@ -2,6 +2,4 @@ function init() {
 
 }
 
-init() {
-    
-}
+init();

@@ -1,6 +1,8 @@
 const placeDiv = document.querySelector(".weather_place");
 const descriptionDiv = document.querySelector(".weather_description");
 const tempDiv = document.querySelector(".weather_temp");
+const tempMin = document.querySelector(".weather_temp_min");
+const tempMax = document.querySelector(".weather_temp_max");
 
 const API_KEY = "e4b0f6207cd091f8614b4500c63f3a7d";
 const COORDS_LS = "Coords";
@@ -40,7 +42,9 @@ function fetchWeather(coords) {
     }).then(function(json){
         placeDiv.innerHTML = json.name;
         descriptionDiv.innerHTML = json.weather[0].main;
-        tempDiv.innerHTML = `${Math.ceil(json.main.temp)}°`
+        tempDiv.innerHTML = `${Math.ceil(json.main.temp)}°`;
+        tempMin.innerHTML = `<div class="temp_min_text">min</div>${Math.ceil(json.main.temp_min)}°`;
+        tempMax.innerHTML = `<div class="temp_max_text">max</div>${Math.ceil(json.main.temp_max)}°`;
         console.log(json)
     });
 }

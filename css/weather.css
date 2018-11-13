@@ -22,9 +22,29 @@
     margin-top: 10px;
 }
 
+.weather_temp_wrap {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+}
+
 .weather_temp {
     font-size: 70px;
     color: white;
     margin-top: 20px;
     font-weight: 100;
+}
+
+.weather_temp_min,
+.weather_temp_max {
+    color: white;
+    font-size: 25px;
+    font-weight: 100;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.temp_min_text,
+.temp_max_text {
+    font-size: 15px;
 }
