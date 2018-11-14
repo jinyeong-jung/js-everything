@@ -18,8 +18,7 @@
 
 .timer_btn,
 .timer_btn_stop,
-.timer_btn_save,
-.timer_history_btn {
+.timer_btn_save {
     border: 1px solid rgba(255,255,255,.9);
     background: transparent;
     cursor: pointer;
@@ -32,25 +31,4 @@
     font-size: 15px;
     border-radius: 10px;
     animation: fadeIn .2s linear;
-}
-
-.timer_history_wrap {
-    z-index: 1001;
-    background-color: white;
-    border-radius: 10px;
-    width: 50%;
-    height: 50%;
-    left: 25%;
-    top: 25%;
-    position: absolute;
-    animation: fadeIn .2s linear;
-}
-
-.timer_history_exit {
-    width: fit-content;
-    position: absolute;
-    right: 15px;
-    top: 7px;
-    color: #444;
-    cursor: pointer;
 }
