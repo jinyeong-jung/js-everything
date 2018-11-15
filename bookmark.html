@@ -13,6 +13,43 @@
             <i class="fas fa-angle-double-left"></i>
         </a>
 
+        <div class="bookmark_title">
+            Bookmark your fave sites
+        </div>
+
+        <!-- bookmark form -->
+        <div class="bookmark_wrap">
+            <form class="bookmark_form">
+                <input type="text" placeholder="Enter the site name" class="bookmark_input_title" />
+                <input type="text" placeholder="Enter the site address" class="bookmark_input_url" />
+                <div class="bookmark_btn_wrap">
+                    <button type="submit" class="bookmark_submit_btn">SUBMIT</button>
+                    <button class="bookmark_list_open">BOOKMARKS</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- success message -->
+        <div class="bookmark_success_msg hidden">
+            <button class="success_msg_exit">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="success_msg_icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="success_msg_text">
+                The bookmark has been saved successfully. 
+            </div>
+        </div>
+
+        <!-- bookmarks list -->
+        <div class="bookmarks_list hidden">
+            <button class="bookmarks_list_exit">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="bookmarks_list_wrap"></div>
+        </div>
+
         <script src="js/bookmark.js"></script>
     </body>
     </html>
