@@ -115,12 +115,13 @@
     z-index: 1001;
     position: absolute;
     background-color: white;
-    width: 80%;
+    width: 70%;
     height: 80%;
     border-radius: 15px;
     top: 10%;
-    left: 10%;
+    left: 15%;
     animation: fadeIn .3s linear;
+    overflow: auto;
 }
 
 .bookmarks_list_exit {
@@ -135,16 +136,13 @@
 
 .bookmarks_list_wrap {
     list-style: none;
-    margin: 40px 30px;
+    margin: 40px 60px;
     color: #434343;
-    display: flex;
 }
 
-.bookmarks_list_wrap span {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    align-items: center;}
+.bookmarks_list_wrap li {
+    margin: 30px 0;
+}
 
 .bm-visitBtn {
     border: none;
@@ -153,7 +151,6 @@
     font-size: 12px;
     color: white;
     background-color: #57D1C9;
-    margin-left: 30px;
     cursor: pointer;
 }
 
@@ -166,4 +163,9 @@
     background-color: #ED5485;
     margin-left: 15px;
     cursor: pointer;
+}
+
+.bookmarks_list_wrap li span {
+    margin-left: 30px;
+    font-size: 17px;
 }

@@ -73,21 +73,40 @@ function openBookmarks(e) {
     e.preventDefault();
 }
 
+function delBookmark(e) {
+    const targetList = e.target.parentNode;
+    const parsedBookmark = JSON.parse(localStorage.getItem(BOOKMARK_LS));
+    // console.log(typeof targetList.id); >> string
+    // console.log(typeof parsedBookmark[0].index); >> number
+
+    const filteredBookmark = parsedBookmark.filter(bookmark => {
+        return bookmark.index !== parseInt(targetList.id);
+    })
+
+    console.log(filteredBookmark)
+    
+    bookmarks = filteredBookmark;
+    console.log(bookmarks)
+    localStorage.setItem(BOOKMARK_LS, JSON.stringify(bookmarks));
+    loadBookmark();
+    // console.log(bookmarks);
+}
+
 function fetchBookmark(loadedBookmark) {
 
     const parsedBookmark = JSON.parse(loadedBookmark);
 
     for (let i = 0; i < parsedBookmark.length; i++) {
-        const bookmarkLi = document.createElement("span");
+        const bookmarkLi = document.createElement("li");
         const nameSpan = document.createElement("span");
         const delBtn = document.createElement("a");
         const visitBtn = document.createElement("a");
         const listIndex = parsedBookmark[i].index;
 
         bmListWrap.appendChild(bookmarkLi);
-        bookmarkLi.appendChild(nameSpan);
         bookmarkLi.appendChild(visitBtn);
         bookmarkLi.appendChild(delBtn);
+        bookmarkLi.appendChild(nameSpan);
 
         bookmarkLi.id = listIndex;
         nameSpan.innerHTML = parsedBookmark[i].sitename;
@@ -96,6 +115,7 @@ function fetchBookmark(loadedBookmark) {
         visitBtn.href = `${parsedBookmark[i].siteurl}`;
         delBtn.innerHTML = "DELETE";
         delBtn.classList.add("bm-delBtn");
+        delBtn.addEventListener("click", delBookmark);
     }
 }
 
