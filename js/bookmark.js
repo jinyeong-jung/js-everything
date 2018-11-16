@@ -3,63 +3,29 @@ const bmForm = document.querySelector(".bookmark_form"),
     urlInput = bmForm.querySelector(".bookmark_input_url"),
     bmSubmit = bmForm.querySelector(".bookmark_submit_btn"),
     bmListBtn = bmForm.querySelector(".bookmark_list_open");
-const bmSuccessMsg = document.querySelector(".bookmark_success_msg"),
-    bmMsgExit = bmSuccessMsg.querySelector(".success_msg_exit");
 const bookmarksList = document.querySelector(".bookmarks_list"),
     bmListExit = bookmarksList.querySelector(".bookmarks_list_exit"),
-    bmListWrap = bookmarksList.querySelector(".bookmarks_list_wrap");
+    bmListWrap = bookmarksList.querySelector(".bookmarks_list_wrap"),
+    noBookmark = bookmarksList.querySelector(".no-bookmark");
+    
+const BOOKMARK_LS = "Bookmark";
+let bookmarks = [];
 
-const BOOKMARK_LS = "Bookmarks"
-let bookmarks = []
-
-function hideMsg(e) {
-    bmSuccessMsg.classList.add("hidden");
-    e.preventDefault();
-}
-
-function saveBookmark(bookmark) {
-
-    // important!!!
-    // get current data from localStorage & send new data to localStorage
-    const loadedBookmark = localStorage.getItem(BOOKMARK_LS);
-    if (loadedBookmark === null) {
-        bookmarks.push(bookmark);
-        localStorage.setItem(BOOKMARK_LS, JSON.stringify(bookmarks));
-    } else {
-        bookmarks = JSON.parse(localStorage.getItem(BOOKMARK_LS));
-        bookmarks.push(bookmark);
-        localStorage.setItem(BOOKMARK_LS, JSON.stringify(bookmarks));
+function validateForm(sitename, siteurl) {
+    if (!sitename || !siteurl) {
+        alert("Please fill in the form");
+        return false;
     }
 
-    // msgBox of successful saving
-    bmSuccessMsg.classList.remove("hidden");
-    bmMsgExit.addEventListener("click", hideMsg);
+    var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    var regex = new RegExp(expression);
 
-    loadBookmark();
-}
-
-function submitHandler(e) {
-    const siteName = nameInput.value;
-    const siteUrl = urlInput.value;
-
-    // important!!!
-    // bookmarks list setting
-    const loadedBookmark = localStorage.getItem(BOOKMARK_LS);
-    if (loadedBookmark === null) {
-        bookmarks = bookmarks;
-    } else {
-        bookmarks = JSON.parse(localStorage.getItem(BOOKMARK_LS));
+    if (!siteurl.match(regex)) {
+        alert("Please use a valid URL");
+        return false;
     }
 
-    bookmark = {
-        index : bookmarks.length + 1,
-        sitename : siteName,
-        siteurl : siteUrl
-    }
-    saveBookmark(bookmark);
-
-    bmForm.reset();
-    e.preventDefault();
+    return true;
 }
 
 function hideBookmarks(e) {
@@ -73,59 +39,85 @@ function openBookmarks(e) {
     e.preventDefault();
 }
 
-function delBookmark(e) {
-    const targetList = e.target.parentNode;
-    const parsedBookmark = JSON.parse(localStorage.getItem(BOOKMARK_LS));
-    // console.log(typeof targetList.id); >> string
-    // console.log(typeof parsedBookmark[0].index); >> number
-
-    const filteredBookmark = parsedBookmark.filter(bookmark => {
-        return bookmark.index !== parseInt(targetList.id);
-    })
-
-    console.log(filteredBookmark)
-    
-    bookmarks = filteredBookmark;
-    console.log(bookmarks)
+function saveBookmark(bookmarks) {
     localStorage.setItem(BOOKMARK_LS, JSON.stringify(bookmarks));
-    loadBookmark();
-    // console.log(bookmarks);
 }
 
-function fetchBookmark(loadedBookmark) {
+function delBookmark(e) {
+    const targetLi = e.target.parentNode;
+    bmListWrap.removeChild(targetLi);
 
-    const parsedBookmark = JSON.parse(loadedBookmark);
+    // console.log(typeof bookmarks[0].index); >> number
+    // console.log(typeof targetLi.id) >> string
 
-    for (let i = 0; i < parsedBookmark.length; i++) {
-        const bookmarkLi = document.createElement("li");
-        const nameSpan = document.createElement("span");
-        const delBtn = document.createElement("a");
-        const visitBtn = document.createElement("a");
-        const listIndex = parsedBookmark[i].index;
+    const filteredBookmarks = bookmarks.filter(bookmark => {
+        return bookmark.index !== parseInt(targetLi.id);
+    })
 
-        bmListWrap.appendChild(bookmarkLi);
-        bookmarkLi.appendChild(visitBtn);
-        bookmarkLi.appendChild(delBtn);
-        bookmarkLi.appendChild(nameSpan);
+    bookmarks = filteredBookmarks;
+    saveBookmark(bookmarks);
+}
 
-        bookmarkLi.id = listIndex;
-        nameSpan.innerHTML = parsedBookmark[i].sitename;
-        visitBtn.innerHTML = "VISIT";
-        visitBtn.classList.add("bm-visitBtn");
-        visitBtn.href = `${parsedBookmark[i].siteurl}`;
-        delBtn.innerHTML = "DELETE";
-        delBtn.classList.add("bm-delBtn");
-        delBtn.addEventListener("click", delBookmark);
+function fetchBookmark(sitename, siteurl) {
+
+    if (!validateForm(sitename, siteurl)) {
+        return false;
     }
+
+    const li = document.createElement("li");
+    const visitBtn = document.createElement("a");
+    const delBtn = document.createElement("a");
+    const span = document.createElement("span");
+
+    const bmIndex = bookmarks.length + 1;
+
+    noBookmark.classList.add("hidden");
+
+    bmListWrap.appendChild(li);
+    li.appendChild(visitBtn);
+    li.appendChild(delBtn);
+    li.appendChild(span);
+
+    li.id = bmIndex;
+    visitBtn.innerHTML = "VISIT"
+    visitBtn.classList.add("bm-visitBtn");
+    visitBtn.href = `${siteurl}`;
+    visitBtn.target = "_blank";
+    delBtn.innerHTML = "DELETE";
+    delBtn.classList.add("bm-delBtn");
+    delBtn.addEventListener("click", delBookmark);
+    span.innerHTML = sitename;
+
+    // save bookmark
+    const bookmarkObj = {
+        index: bmIndex,
+        sitename: sitename,
+        siteurl: siteurl
+    }
+    bookmarks.push(bookmarkObj);
+    saveBookmark(bookmarks);
+}
+
+function submitHandler(e) {
+    const sitename = nameInput.value;
+    const siteurl = urlInput.value;
+    fetchBookmark(sitename, siteurl);
+
+    bmForm.reset();
+    e.preventDefault();
 }
 
 function loadBookmark() {
     const loadedBookmark = localStorage.getItem(BOOKMARK_LS);
     if (loadedBookmark === null) {
-        bmListWrap.innerHTML = `<div class="no-bookmark">Nothing saved <i class="far fa-frown"></i><div>`;
+        // Nothing saved
+        noBookmark.classList.remove("hidden");
     } else {
-        bmListWrap.innerHTML = "";
-        fetchBookmark(loadedBookmark);
+        // Fetch Bookmarks
+        const parsedBookmark = JSON.parse(loadedBookmark);
+        parsedBookmark.forEach(bookmark => {
+            fetchBookmark(bookmark.sitename, bookmark.siteurl);
+        });
     }
 }
 

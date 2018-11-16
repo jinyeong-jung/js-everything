@@ -29,25 +29,16 @@
             </form>
         </div>
 
-        <!-- success message -->
-        <div class="bookmark_success_msg hidden">
-            <button class="success_msg_exit">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="success_msg_icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="success_msg_text">
-                The bookmark has been saved successfully. 
-            </div>
-        </div>
-
         <!-- bookmarks list -->
         <div class="bookmarks_list hidden">
             <button class="bookmarks_list_exit">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="bookmarks_list_wrap"></div>
+            <div class="bookmarks_list_wrap">
+                <div class="no-bookmark hidden">
+                    Nothing saved <i class="far fa-frown"></i>
+                </div>
+            </div>
         </div>
 
         <script src="js/bookmark.js"></script>
